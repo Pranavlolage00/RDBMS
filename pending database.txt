@@ -1,0 +1,17 @@
+Student (rollno, sname, class, timetable)
+Lab (LabNo, LabName, capacity, equipment)
+
+
+create table student2(rollno int primary key,sname varchar(20),
+class char(10),timetable varchar(20));
+
+create table lab2
+(labno int primary key,
+labname varchar(20),
+capicity int,
+equipment varchar(20),
+rollno int references student);
+
+insert into student values(101,'om','fy','12 to 02');
+
+ 

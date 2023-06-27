@@ -1,0 +1,86 @@
+Item (itemno, itemname ) 
+
+Supplier (supplier_No , supplier_name, address, city )
+
+create table item(ino int primary key,
+iname varchar(20));
+
+create table supplier(supplier_no int primary key,
+supplier_name varchar(20),
+address varchar(20),
+city varchar(20));
+
+create table i_s(ino int references item,
+supplier_no int references supplier,
+rate float,
+qty int);
+
+insert into item values(101,'motar');
+insert into item values(102,'drill machine');
+insert into item values(101,'cuttur');
+insert into item values(101,'laptop');
+insert into item values(101,'keyboard');
+
+insert into supllier values(1,'om','morge wasti','shrirampur');
+insert into supllier values(2,'sai','mg road','pune');
+insert into supllier values(3,'RAm','gandhi chouk','rahuri');
+insert into supllier values(3,'SHAM','km road','mumbai');
+
+insert into i_s values(101,1,2100,100); 
+insert into i_s values(102,2,1500,50);
+
+insert into i_s values(103,3,900,40); 
+insert into i_s values(104,4,,2500,100);
+insert into i_s values(101,1,2500,100); 
+insert into i_s values(101,,2500,100);
+insert into i_s values(101,1,2500,100);
+insert into i_s values(101,1,2500,100);
+
+create or replace function count(item_name1 varchar ) return int
+is
+   total int;
+begin
+   select count(*) into total from item,supplier,i_s where
+item.ino=i_s.ino and supplier.supplier_no=i_s.supplier_no
+and iname='laptop';
+
+  return total;
+
+end;
+
+select count('om')from dual;
+
+create or replace trigger t1 before insert or update on
+i_s
+for each row
+
+declare 
+   invalid_rate exception;
+invalid_qty exception;
+
+  begin
+        if(:new.qty<=0) then
+   raise invalid_qty;
+   end if;
+  if(:new.rate<=0) then
+   raise invalid_rate;
+ end if;
+exception 
+        when invalid_qty then
+   raise_appliction_error(-20000,'qty must be >0');
+   when invalid_rate then
+         raise_appliction_error(-20000,'rate must be>0');
+end;
+                   
+
+ 
+
+
+ 
+
+
+
+
+    
+
+`	

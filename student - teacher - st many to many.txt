@@ -1,0 +1,89 @@
+create table student(sno int primary key,
+sname varchar(23),
+sclass varchar(23),
+saddrs varchar(32),
+per float);
+
+create table teacher(tno int primary key,
+tname varchar(20),
+addrs varchar(20),
+phone number(10));
+
+create table st(sno int references student,
+tno int references teacher);
+
+insert into teacher values(1,'om','pune',9561173535);
+insert into teacher values(2,'sai','shrirampur',9561177846);
+insert into teacher values(3,'RAm','sambhaji_nagar',9561184161);
+insert into teacher values(4,'Sham','belapur',9564841818);
+select * from teacher;
+
+insert into student values(101,'kshitij','Fy','pune',44);
+insert into student values(102,'harshal','Fy','pune',77);
+insert into student values(103,'suresh','Fy','pune',33);
+insert into student values(104,'ramesh','sy','mumbai',88);
+insert into student values(105,'jayesh','sy','mumbai',34);
+insert into student values(106,'rakesh','sy','mumbai',76);
+insert into student values(107,'mahesh','ty','pune',77);
+insert into student values(108,'sheyash','ty','pune',86);
+insert into student values(109,'akshay','ty','pune',78);
+insert into student values(110,'shubham','ty','pune',35);
+select * from student;
+
+insert into st values(101,1);
+insert into st values(102,4);
+insert into st values(103,2);
+insert into st values(104,1);
+insert into st values(105,3);
+insert into st values(106,4);
+insert into st values(107,2);
+insert into st values(108,3);
+insert into st values(109,4);
+insert into st values(110,1);
+select * from st;
+
+Q.1] Display maximum per of student.?
+#=select max(per) from student;
+o/p=
+    MAX(PER)
+88
+
+
+Q.2] Display student name whose per is maximum..?
+#=select sname from student where per=(select max(per) from student);
+o/p=
+    SNAME
+ramesh
+
+Q.3] Display class wise maximum percentage of student.?
+#=select sclass,max(per) from student group by sclass;
+o/p=
+      		
+SCLASS	MAX(PER)
+Fy	77
+sy	88
+ty	86
+
+Q.4] count classwise sudent..?
+#=select sclass, count(*) from student group by sclass;
+o/p=
+   SCLASS	COUNT(*)
+      Fy	3
+      sy	3
+      ty	4
+
+Q.5] count number of students of sy..?
+#=select sclass,count(*) from student group by sclass having sclass='sy';
+o/p=
+     SCLASS	COUNT(*)
+      sy	3
+
+Q.6] count number of student in fy and sy..?
+#=select sclass,count(*) from student group by sclass having sclass in('fy','sy');
+o/p=
+   SCLASS	COUNT(*)
+      sy	3
+      fy    3
+
+ 
+

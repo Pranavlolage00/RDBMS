@@ -1,0 +1,44 @@
+Plan (plan_no, plan_name, nooffreecalls, freecalltime, fix_amt)
+Customer (cust_no, cust_name, mobile_no)
+
+create table plan(plan_no int primary key,
+plan_name varchar(20),
+nooffreecalls int,
+freecallstime int,
+fix_amt float);
+
+create  table Customer(cust_no int primary key,
+cust_name varchar(20),
+mobile_no number(10),
+plan_no int references plan);
+
+insert into plan values(101,'jio fiber',10,20,250);
+insert into plan values(102,'vi',45,80,480);
+insert into plan values(103,'airtel strem',20,40,780);
+insert into plan values(104,'BSNL ROW',15,20,450);
+insert into plan values(105,'TOP UP fiber',50,80,700);
+
+insert into customer values(1,'om',9561173535,101);
+insert into customer values(2,'sai',9561452535,101);
+insert into customer values(3,'ram',9514573535,103);
+insert into customer values(4,'sham',9561173652,104);
+insert into customer values(5,'aba',7851177855,105);
+insert into customer values(6,'baba',9561173535,102);
+
+1) Write a function which will accept plan number from user and display all the details 
+of the selected plan
+
+
+create or replace function show(plan_no1 int) return int
+as
+    ans int;
+begin
+select count(*)into ans from plan,customer where
+plan.plan_no=customer.plan_no and
+plan_no=plan_no1;
+
+     return ans;
+
+end;
+
+

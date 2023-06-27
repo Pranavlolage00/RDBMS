@@ -1,0 +1,28 @@
+create table game(game_name varchar(20),
+no_of_player int primary key,
+coach_name varchar(20));
+
+create table player(pid int primary key,
+pname varchar(20),
+addr varchar(20),
+club_name varchar(20));
+
+create table gp(no_of_player int references game,
+pid int references player);
+
+insert into game values('BGMI',4,'kshitij');
+insert into game values('football',11,'sahil');
+insert into game values('hill clamb',2,'parth');
+insert into game values('COC',4,'om');
+insert into game values('cricket',11,'shubham');
+
+insert into player values(101,'om','fc road','dhormare club');
+insert into player values(102,'sai',tc road','mandan club');
+insert into player values(103'om','main road','shirsath club');
+
+insert into gp values(101,4);
+insert into gp values(102,2);
+insert into gp values(103,4);
+insert into gp values(102,11);
+insert into gp values(104,2);
+insert into gp values(101,11);

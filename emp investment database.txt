@@ -1,0 +1,59 @@
+Write a procedure which will display details of employees invested amount in “Mutual 
+Fund” 
+
+Employee (emp_id, emp_name, address)
+Investment (inv_no, inv_name, inv_date, inv_amount)
+
+create table emp(emp_id int primary key,
+emp_name varchar(20),
+address varchar(20));
+
+create table investment(inv_no int primary key,
+inv_name varchar(20,
+inv_date date,
+inv_amount float,
+emp_id int references emp);
+
+insert into emp values(101,'om','shrirampur');
+insert into emp values(102,'sai','pune');
+insert into emp values(103,'ram','shrinagar');
+insert into emp values(104,'sham','belapur');
+
+insert into investment values(201,'mutal fund','22-feb-2021',25000.25,103);
+insert into investment values(202,'mutal fund','23-jan-2017',85000.50,101);
+insert into investment values(203,'shaers','12-feb-2021',4500.75,102);
+insert into investment values(204,'mutal fund','21-dec-2019',28850.85,104);
+
+select emp.* from emp,investment where
+emp.emp_id=investment.emp_id
+and inv_name="mutal fund";
+
+
+
+create or replace procedure p22
+as 
+  cursor c1 is select emp.* from emp,investment where
+emp.emp_id=investment.emp_id
+and inv_name='mutal fund';
+
+   r1 c1%rowtype;
+
+BEGIN
+   
+open c1;
+     loop
+FETCH C1 INTO R1;
+EXIT WHEN C1%NOTFOUND;
+   dbms_output.put_line('employee no='||r1.emp_id); 
+      dbms_output.put_line('employee name='||r1.emp_name);
+   dbms_output.put_line('employee addrs'||r1.address);
+end loop;
+
+  close c1;
+END;
+
+
+
+
+
+ 

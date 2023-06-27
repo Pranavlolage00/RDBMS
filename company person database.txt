@@ -1,0 +1,73 @@
+ Company (name , address , city , phone , share_value) 
+Person (pname ,pcity )
+
+create table company(name varchar(20) primary key,
+address varchar(20),
+city varchar(20),
+phone number(10),
+share_value float);
+
+ create table person(pname varchar(20) primary ke,
+pcity varchar(20));
+
+
+create table c_p(name varchar(20) references company,
+pname varchar(20) references person,
+no_of_shares int);
+
+1) Write a trigger before insert or update on No_of_shares field should not be 
+zero.(Raise user defined exception and give appropriate message)
+
+create or replace trigger cp before insert OR update
+on c_p
+for each row
+ declare
+ 
+    invalid_no_of_shaers Exception;
+
+begin
+      
+if(:new.no_of_shares<=0) then
+  raise invalid_no_of_shaers;
+
+end if;
+
+Exception
+  when invalid_no_of_shaers then
+raise_application_error(-20000,'no of shaers must be grater than zero');
+end;
+
+insert into c_p values('maxotag','om',-20);
+
+
+
+insert into c_p values('maxotag','om',20);
+insert into company values('maxotag','mg road','pune',9561173535,20.55);
+insert into person values('om','pune');
+
+
+Write a function to display total no_of_shares of a specific person.
+
+select sum(no_of_shares) from company,person,c_p where
+company.name=c_p.name  and person.pname=c_p.pname
+and pname='om';
+
+create or replace function nof(pname1 varchar) return float
+as
+    total int;
+begin
+      select sum(no_of_shares)into total from company,person,c_p where
+company.name=c_p.name  and person.pname=c_p.pname
+and pname=pname1;
+
+    return total;
+endl;
+
+select show('om')from dual;
+
+
+
+
+
+
+

@@ -1,0 +1,282 @@
+[SET:A;QNO:2]
+Declare
+r student.rno%type;
+sn student.sname%type;
+sc student.sclass%type;
+p student.per%type;
+g varchar2(20);
+Begin
+r:=:r;
+sn:=:sn;
+sc:=:sc;
+p:=:p;
+if(p>80)then
+g:='O';
+elsif(p>70)then
+g:='A';
+elsif(p>60)then
+g:='B+';
+elsif(p>50)then
+g:='B';
+elsif(p>40)then
+g:='C';
+else
+g:='F';
+end if;
+insert into student values(r,sn,sc,p,g);
+dbms_output.put_line('Record inserted');
+end;
+/
+
+
+
+
+
+
+
+
+[SET:B;QNO:1]
+Declare
+r student.rno%type:=:r;
+srec student.%rowtype;
+Begin
+select * into srec
+from student
+where rno=r;
+dbms_output.put_line(' Rno  Sname  Sclass  per Grade');
+dbms_output.put_line('srec.rno||'  '||srec.Sname||'  '||srec.Sclass||'  '||srec.per||'  '||srec.grade||');
+
+dbms_output.put_line('Roll NO='||srec.rno);
+end;
+/
+
+
+
+
+
+
+
+
+
+[SET:B;QNO:3]
+Declare
+i int;
+Begin
+for i in 1..10
+loop
+if i mod 2=0 then
+  dbms_output.put_line('fybbaca');
+else
+   dbms_output.put_line('FYBBACA');
+end if;
+end loop;
+end;
+/
+
+
+[SET:B;QNO:2]
+declare
+r student.rno%type:=:r;
+sn student.sname%type;
+p student.per%type;
+g varchar2(20);
+begin
+select sname,per into sn,p
+from student
+where rno=r;
+if{p>80)then
+g:='O';
+elsif(p>70)then
+g:='A';
+elsif(p>60)then
+g:='B+';
+elsif(p>50)then
+g:='B';
+elsif(p>40)then
+g:='C';
+else
+g:='F';
+end if;
+dbms_output.put_line('Rno  Sname  per  Grade');
+
+dbms_output.put_line('Roll No='||r);
+dbms_output.put_line('Name='||sn);
+dbms_output.put_line('per='||p);
+dbms_output.put_line('Grade='||g);
+end;
+/
+ 
+
+
+
+
+[SET:A]
+[QNO:1]
+declare
+i int;
+n int;
+begin
+n:=:Enter_number;
+for i in 1..10
+loop
+ dbms_output.put_line(i*n);
+end loop;
+end;
+/
+
+
+
+
+[SET A]
+create table wholesaler(w_no int primary key,
+w_name varchar(20),
+address varchar(20),
+city varchar(20));
+
+
+
+create table product(product_no int primary key,
+product_name varchar(20),
+rate float);
+
+
+
+create table wp(w_no int references wholesaler,
+product_no int references product,
+quantity int);
+
+[QNO:1]
+declare
+pno int;
+name product.product_name%type;
+rate product.rate%type;
+quantity_out_of_range Exception;
+begin
+pno:=:Enter_pno;
+name:=:Enter_name;
+rate:=:Enter_rate;
+if(not(rate>=50 and rate<=200))then
+ RAISE quantity_out_of_range;
+end if;
+insert into product values(pno,name,rate);
+dbms_output.put_line('record insert..');
+Exception
+ when quantity_out_of_range then
+ dbms_output.put_line('quantity must be 50 to 200 ...');
+end;
+/
+
+[QNO:2]
+declare 
+rate int;
+INVALID_RATE_VALUE Exception;
+begin
+rate:=:Enter_rate;
+if(rate<=0)then
+RAISE INVALID_RATE_VALUE;
+end if;
+dbms_output.put_line('correct input..');
+
+Exception
+when INVALID_RATE_VALUE then
+dbms_output.put_line('rate shoulde not br -ve or 0..');
+end;
+/
+
+
+
+[SET B]
+create table lab(labno int primary key,
+labname varchar(20),
+capacity int check(capacity>0),
+equipment varchar(100));
+
+
+create table student10(rollno int primary key,
+sname varchar(20),
+class varchar(20),
+timetable varchar(20),
+mobileno number(10),
+labno int references lab);
+
+
+
+insert into lab values(1,'computer lab',40,'computer keyboard mouse');
+insert into lab values(2,'science lab',40,'telescope microsope tube tharma meter');
+
+
+
+
+insert into student10 values(101,'om','fybbaca','3 to 5',9552631582,1);
+insert into student10 values(102,'sai','fybbaca','3 to 5',9552631554,1);
+insert into student10 values(103,'ram','fybcs','10 to 5',9552631525,2);
+insert into student10 values(101,'sham','fybcs','10 to 5',9552631565,2);
+
+
+[QNO:1]
+declare 
+no lab.labno%type;
+r1 lab%rowtype;
+invalid_lab_no Exception;
+begin
+no:=:Enter_labno;
+ if(no<=0)then
+ raise invalid_lab_no;
+end if;
+select * into r1 from lab where lab no=no;
+dbms_output.put_line('lab no='||r1.labno);
+dbms_output.put_line('lab name='||r1.labname);
+dbms_output.put_line('lab capacity='||r1.capacity);
+dbms_output.put_line('lab Equipment='||r1.equipment);
+Exception
+when invalid_lab_no then
+dbms_output.put_line('lab number should not be -ve.. ');
+when no_data_found then
+dbms_output.put_line('lab record not found..');
+when others then
+dbms_output.put_line('something went wrong..');
+end;
+/
+
+[QNO:2]
+declare
+mno number(10);
+invalid_mobile_number Exception;
+begin
+mno:=:mno;
+if(length(mno)<10)then
+raise invalid_mobile_number;
+end if;
+dbms_output.put_line('correct input');
+Exception
+ when invalid_mobile_number then
+  dbms_output.put_line('mobile number is less than 10 digits..');
+ when others then
+  dbms_output.put_line('something went wrong...');
+end;
+/
+
+[QNO:3]
+declare
+lno lab.labno%type;
+lname lab.labname%type;
+lcap lab.capacity%type;
+lequip lab.equipment%type;
+invalid_capacity_range Exception;
+begin
+lno:=:lno;
+lname:=:lname;
+lcap:=:lcap;
+lequip:=:lequip;
+if(lcap>40)then
+ raise invalid_capacity_range;
+end if;
+insert into lab values(lno,lname,lcap,lequip);
+dbms_output.put_line('record insert succ....');
+Exception
+ when invalid_capacity_range then
+  dbms_output.put_line('do not insert > 40 student in lab..');
+ when others then
+  dbms_output.put_line('sometheing wents wrong..');
+end;
+/

@@ -1,0 +1,48 @@
+Bill (billno, day, tableno, total)
+Menu (dish_no, dish_desc, price)
+
+create table bill(bno int primary key
+day varchar(20),
+tableno int,
+total float);
+
+create table menu(dish_no int primary key,
+dish_disc varchar(20),
+price float);
+
+create table b_m(bno int references  bill,
+dish_no int references menu,
+qty int);
+
+insert into bill values(101,'sunday',5,2400);
+insert into bill values(102,'saturday',3,2100);
+insert into bill values(103,'monday',2,1980);
+insert into bill values(104,'friday',1,1700);
+insert into bill values(105,'wednesday',4,2560);
+
+insert into menu values(201,'fried rice',250);
+insert into menu values(202,'panner tikka',220);
+insert into menu values(203,'shev bhaji',150);
+insert into menu values(204,'pizza',240);
+insert into menu values(205,'veg kholapuri',110);
+
+insert into b_m values(101,201,4);
+insert into b_m values(101,205,3);
+insert into b_m values(102,204,6);
+insert into b_m values(103,202,4);
+insert into b_m values(104,203,1);
+insert into b_m values(105,204,2);
+insert into b_m values(104,205,7);
+insert into b_m values(103,202,2);
+
+
+
+1) Write a procedure to display menu details having price between 200 to 500 which 
+were order on ‘Saturday’ .
+
+select menu.*from bill,menu,b_m where
+bill.bno=b_m.bno and
+menu.dish_no=b_m.dish_no
+and price>=200 and prie<=500 
+and day='saturday'; 
+

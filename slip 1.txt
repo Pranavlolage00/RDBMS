@@ -1,0 +1,24 @@
+declare 
+  r1 client%rowtype;
+
+cursor c1 is select * from client,policy_info,cp where
+client.client_no=cp.client_no and 
+policy_info.policy_no=cp.policy_no
+order by pdate;
+
+begin 
+      open c1;
+loop
+     fetch c1 into r1;
+   exit when c1%notfound;
+dbms_output.put_line('client no='||r1.client_no);
+dbms_output.put_line('client name='||r1.client_name);
+dbms_output.put_line('client addr='||r1.address);
+dbms_output.put_line('client dob='||r1.birthdate);
+
+end loop;
+       close c1;
+end;
+/
+
+

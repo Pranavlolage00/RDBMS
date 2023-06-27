@@ -1,0 +1,41 @@
+Newspaper (name,language , publisher , cost ) 
+ Cities (pincode , city, state)
+
+create table newspaper(name varchar(20) primary key,
+language varchar(20),
+publishar varchar(20),
+cost float);
+
+create table citeis(pincode int primary key,
+city varchar(20),
+state varchar(20));
+
+create table NC(name varchar(20) references newspaper,
+pincode int references citeis,
+daliy_req int);
+
+insert into newspaper values('sakal','marathi','sakal pvt ltd',7);
+insert into newspaper values('lokmat','marathi','lokmat pvt ltd',4);
+insert into newspaper values('times india','english','india pvt ltd',12);
+insert into newspaper values('kesri','hindi','kesri pvt ltd',5);
+insert into newspaper values('maratha','hindi','kesri pvt ltd',6);
+insert into newspaper values('times india','english','india pvt ltd',12);
+
+insert into cities values(413709,'shrirampur','maharashtra');
+insert into cities values(411001,'pune','maharashtra');
+insert into cities values(414002,'chindwada','gujrat');
+insert into cities values(415003,'ujjain','madhya pradesh');
+insert into cities values(416004,'katmandu','nepal');
+
+insert into nc values('sakal',413709,160);
+insert into nc values('lokmat',411001,220);
+insert into nc values('times india',414002,300);
+insert into nc values('kesri',415003,120);
+insert into nc values('maratha',413709,110);
+insert into nc values('times india',416004,200);
+insert into nc values('sakal',414003,60);
+insert into nc values('lokmat',411001,80);
+insert into nc values('kesri',414002,130);
+
+ 
+
